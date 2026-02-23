@@ -621,7 +621,9 @@
     <a class="logo" onclick="showHome()">Mi<span>Blog</span></a>
     <nav>
       <a onclick="showHome()">Entradas</a>
-      <a onclick="showNewPost()" style="color:var(--accent); font-weight:500;">+ Nueva entrada</a>
+      <a id="nav-new-post" onclick="showNewPost()" style="color:var(--accent); font-weight:500; display:none;">+ Nueva entrada</a>
+      <a id="nav-login" onclick="showLoginModal()" style="color:var(--accent); font-weight:500;">Ingresar</a>
+      <a id="nav-logout" onclick="logout()" style="color:var(--muted); display:none;">Salir</a>
     </nav>
   </header>
 
@@ -718,6 +720,23 @@
     <p>© 2025 · Hecho con intención</p>
   </footer>
 
+  <!-- LOGIN MODAL -->
+  <div id="loginModal" style="display:none; position:fixed; inset:0; background:rgba(26,23,20,0.7); z-index:999; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
+    <div style="background:var(--cream); padding:3rem 2.5rem; max-width:380px; width:90%; position:relative; animation:fadeUp 0.3s ease both;">
+      <button onclick="closeLoginModal()" style="position:absolute;top:1rem;right:1.2rem;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--muted);">✕</button>
+      <p style="font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;">Administrador</p>
+      <h2 style="font-family:var(--serif);font-size:1.8rem;font-weight:300;color:var(--dark);margin-bottom:2rem;">Ingresá tu contraseña</h2>
+      <div style="display:flex;flex-direction:column;gap:0.4rem;margin-bottom:1.5rem;">
+        <label style="font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);">Contraseña</label>
+        <input id="login-pass" type="password" placeholder="••••••••"
+          style="background:white;border:1px solid var(--border);padding:0.75rem 1rem;font-family:var(--sans);font-size:1rem;color:var(--ink);outline:none;"
+          onkeydown="if(event.key==='Enter') submitLogin()" />
+        <p id="login-error" style="color:var(--accent);font-size:0.8rem;min-height:1rem;margin-top:0.3rem;"></p>
+      </div>
+      <button onclick="submitLogin()" style="width:100%;padding:0.85rem;background:var(--accent);color:white;border:none;font-family:var(--sans);font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;">Entrar</button>
+    </div>
+  </div>
+
   <!-- TOAST -->
   <div class="toast" id="toast"></div>
 
@@ -730,6 +749,14 @@
     const BLOG_NAME  = "MiBlog";
     const TWITTER_USER = "@tu_usuario"; // ← cambiá esto una sola vez
     const BLOG_URL  = window.location.origin;
+
+    // ════════════════════════════════════════
+    //  CONTRASEÑA DE ADMINISTRADOR
+    //  ← Cambiá este valor por tu contraseña
+    // ════════════════════════════════════════
+    const ADMIN_PASSWORD = "micontraseña2025";
+
+    let isAdmin = sessionStorage.getItem('blog_admin') === 'true';
 
     let posts = JSON.parse(localStorage.getItem('blog_posts') || 'null') || [
       {
@@ -839,12 +866,52 @@
     }
 
     function showNewPost() {
+      if (!isAdmin) { showLoginModal(); return; }
       document.getElementById('homeView').classList.add('hidden');
       document.getElementById('postView').classList.remove('active');
       document.getElementById('newPostView').classList.add('active');
       document.getElementById('np-date').value = new Date().toISOString().split('T')[0];
       updateTwitterPreview();
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showLoginModal() {
+      document.getElementById('loginModal').style.display = 'flex';
+      setTimeout(() => document.getElementById('login-pass').focus(), 100);
+    }
+
+    function closeLoginModal() {
+      document.getElementById('loginModal').style.display = 'none';
+      document.getElementById('login-pass').value = '';
+      document.getElementById('login-error').textContent = '';
+    }
+
+    function submitLogin() {
+      const pass = document.getElementById('login-pass').value;
+      if (pass === ADMIN_PASSWORD) {
+        isAdmin = true;
+        sessionStorage.setItem('blog_admin', 'true');
+        closeLoginModal();
+        updateAdminUI();
+        showNewPost();
+      } else {
+        document.getElementById('login-error').textContent = 'Contraseña incorrecta.';
+        document.getElementById('login-pass').value = '';
+        document.getElementById('login-pass').focus();
+      }
+    }
+
+    function logout() {
+      isAdmin = false;
+      sessionStorage.removeItem('blog_admin');
+      updateAdminUI();
+      showToast('Sesión cerrada.');
+    }
+
+    function updateAdminUI() {
+      document.getElementById('nav-new-post').style.display = isAdmin ? 'inline' : 'none';
+      document.getElementById('nav-login').style.display   = isAdmin ? 'none'   : 'inline';
+      document.getElementById('nav-logout').style.display  = isAdmin ? 'inline' : 'none';
     }
 
     // ════════════════════════════════════════
@@ -996,6 +1063,7 @@
     // ════════════════════════════════════════
 
     renderPosts();
+    updateAdminUI();
   </script>
 </body>
 </html>

@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO AUTOMÁTICO: Solo cambiá el título y descripción de cada entrada -->
+  <title id="page-title">Mi Blog — Lifestyle & Vida Personal</title>
+  <meta name="description" id="meta-desc" content="Reflexiones, experiencias y perspectivas sobre la vida cotidiana." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" id="canonical" href="https://tu-blog.vercel.app/" />
+
+  <!-- Open Graph (para compartir en redes) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" id="og-title" content="Mi Blog — Lifestyle & Vida Personal" />
+  <meta property="og:description" id="og-desc" content="Reflexiones, experiencias y perspectivas sobre la vida cotidiana." />
+  <meta property="og:image" id="og-image" content="https://tu-blog.vercel.app/og-default.jpg" />
+  <meta property="og:url" id="og-url" content="https://tu-blog.vercel.app/" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@tu_usuario" />
+  <meta name="twitter:title" id="tw-title" content="Mi Blog" />
+  <meta name="twitter:description" id="tw-desc" content="Reflexiones sobre la vida cotidiana." />
+  <meta name="twitter:image" id="tw-image" content="https://tu-blog.vercel.app/og-default.jpg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e8;
+      --dark: #1a1714;
+      --ink: #2d2926;
+      --muted: #8a8178;
+      --accent: #c4603a;
+      --accent-light: #e8cfc4;
+      --border: #e0d9ce;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* ── NOISE TEXTURE ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(245, 240, 232, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--dark);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav { display: flex; gap: 2rem; align-items: center; }
+
+    nav a {
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 6rem 2rem 4rem;
+      max-width: 860px;
+      margin: 0 auto;
+      text-align: center;
+      animation: fadeUp 0.8s ease both;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--dark);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 em { font-style: italic; color: var(--accent); }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto 3rem;
+    }
+
+    .divider {
+      width: 40px;
+      height: 1px;
+      background: var(--accent);
+      margin: 0 auto 3rem;
+    }
+
+    /* ── POSTS GRID ── */
+    .posts-section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem 6rem;
+    }
+
+    .section-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2px;
+    }
+
+    .post-card {
+      background: white;
+      padding: 2.5rem 2rem;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .post-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 2px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .post-card:hover::before { width: 100%; }
+    .post-card:hover { background: #fdfaf6; transform: translateY(-2px); }
+
+    .post-date {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .post-title {
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--dark);
+      margin-bottom: 1rem;
+    }
+
+    .post-excerpt {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .post-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent-light);
+      padding: 0.25rem 0.75rem;
+      border-radius: 2px;
+    }
+
+    /* ── SINGLE POST ── */
+    .post-view {
+      display: none;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 4rem 2rem 6rem;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .post-view.active { display: block; }
+    .home-view.hidden { display: none; }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      cursor: pointer;
+      margin-bottom: 3rem;
+      transition: color 0.2s;
+      border: none;
+      background: none;
+    }
+
+    .back-btn:hover { color: var(--accent); }
+
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header .post-date { margin-bottom: 1.5rem; }
+
+    .post-header h1 {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--dark);
+      margin-bottom: 1.5rem;
+    }
+
+    .post-header .post-tag { margin-bottom: 2rem; display: inline-block; }
+
+    .post-body {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: var(--ink);
+    }
+
+    .post-body p { margin-bottom: 1.6rem; }
+
+    .post-body h2 {
+      font-family: var(--serif);
+      font-size: 1.8rem;
+      font-weight: 400;
+      color: var(--dark);
+      margin: 2.5rem 0 1rem;
+    }
+
+    .post-body blockquote {
+      border-left: 2px solid var(--accent);
+      padding-left: 1.5rem;
+      margin: 2rem 0;
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      font-style: italic;
+      color: var(--muted);
+    }
+
+    /* ── SHARE BAR ── */
+    .share-bar {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 2rem 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin: 3rem 0;
+    }
+
+    .share-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1.2rem;
+      border: 1px solid var(--dark);
+      background: var(--dark);
+      color: var(--cream);
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      text-decoration: none;
+    }
+
+    .share-btn:hover { background: var(--accent); border-color: var(--accent); }
+
+    /* ── COMMENTS ── */
+    .comments-section { margin-top: 3rem; }
+
+    .comments-title {
+      font-family: var(--serif);
+      font-size: 1.8rem;
+      font-weight: 400;
+      color: var(--dark);
+      margin-bottom: 2rem;
+    }
+
+    .comment-form { margin-bottom: 3rem; }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+
+    .form-group label {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .form-group input,
+    .form-group textarea {
+      background: white;
+      border: 1px solid var(--border);
+      padding: 0.75rem 1rem;
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.2s;
+      resize: vertical;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus { border-color: var(--accent); }
+
+    .submit-btn {
+      margin-top: 1rem;
+      padding: 0.75rem 2rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .submit-btn:hover { background: var(--dark); }
+
+    .comment-list { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .comment-item {
+      background: white;
+      padding: 1.5rem;
+      border-left: 2px solid var(--accent-light);
+      animation: fadeUp 0.4s ease both;
+    }
+
+    .comment-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+    }
+
+    .comment-author {
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: var(--dark);
+    }
+
+    .comment-date {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .comment-text { font-size: 0.92rem; color: var(--ink); }
+
+    .auto-reply {
+      margin-top: 0.75rem;
+      padding: 0.75rem 1rem;
+      background: var(--accent-light);
+      border-left: 2px solid var(--accent);
+      font-size: 0.85rem;
+      color: var(--ink);
+    }
+
+    .auto-reply strong { color: var(--accent); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 0.3rem; }
+
+    /* ── NEW POST FORM ── */
+    .new-post-view {
+      display: none;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 4rem 2rem 6rem;
+    }
+
+    .new-post-view.active { display: block; }
+
+    .editor-title-input {
+      width: 100%;
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 300;
+      color: var(--dark);
+      border: none;
+      background: transparent;
+      outline: none;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .editor-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .editor-meta input, .editor-meta select {
+      background: white;
+      border: 1px solid var(--border);
+      padding: 0.6rem 1rem;
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      color: var(--ink);
+      outline: none;
+    }
+
+    .editor-meta input:focus, .editor-meta select:focus { border-color: var(--accent); }
+
+    .editor-excerpt {
+      width: 100%;
+      background: white;
+      border: 1px solid var(--border);
+      padding: 1rem;
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      color: var(--ink);
+      outline: none;
+      margin-bottom: 1rem;
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .editor-body {
+      width: 100%;
+      background: white;
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      font-family: var(--sans);
+      font-size: 1rem;
+      color: var(--ink);
+      outline: none;
+      min-height: 400px;
+      resize: vertical;
+      line-height: 1.8;
+    }
+
+    .editor-body:focus, .editor-excerpt:focus { border-color: var(--accent); }
+
+    .editor-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .publish-btn {
+      padding: 0.75rem 2.5rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .publish-btn:hover { background: var(--dark); }
+
+    .cancel-btn {
+      padding: 0.75rem 2rem;
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .cancel-btn:hover { border-color: var(--dark); color: var(--dark); }
+
+    .twitter-preview {
+      margin-top: 1.5rem;
+      background: #e8f4fd;
+      border: 1px solid #b8d4e8;
+      padding: 1rem 1.5rem;
+      font-size: 0.85rem;
+      color: #1a6a9a;
+    }
+
+    .twitter-preview strong { display: block; margin-bottom: 0.4rem; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: var(--serif);
+      font-size: 1.8rem;
+      font-weight: 300;
+      color: var(--dark);
+      margin-bottom: 1rem;
+    }
+
+    .footer-logo span { color: var(--accent); }
+
+    footer p {
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--dark);
+      color: var(--cream);
+      padding: 1rem 1.5rem;
+      font-size: 0.85rem;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.3s;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
+      .editor-meta { grid-template-columns: 1fr; }
+      nav { gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <a class="logo" onclick="showHome()">Mi<span>Blog</span></a>
+    <nav>
+      <a onclick="showHome()">Entradas</a>
+      <a onclick="showNewPost()" style="color:var(--accent); font-weight:500;">+ Nueva entrada</a>
+    </nav>
+  </header>
+
+  <!-- ══ HOME VIEW ══ -->
+  <div class="home-view" id="homeView">
+    <div class="hero">
+      <p class="hero-eyebrow">Lifestyle &amp; Vida Personal</p>
+      <h1>Vivir con <em>intención</em><br>y contarlo</h1>
+      <p class="hero-sub">Un espacio para reflexionar sobre lo cotidiano, lo que nos mueve y lo que construimos cada día.</p>
+      <div class="divider"></div>
+    </div>
+
+    <section class="posts-section">
+      <p class="section-label">Entradas recientes</p>
+      <div class="posts-grid" id="postsGrid"></div>
+    </section>
+  </div>
+
+  <!-- ══ SINGLE POST VIEW ══ -->
+  <div class="post-view" id="postView">
+    <button class="back-btn" onclick="showHome()">← Volver</button>
+    <article>
+      <div class="post-header">
+        <p class="post-date" id="pv-date"></p>
+        <h1 id="pv-title"></h1>
+        <span class="post-tag" id="pv-tag"></span>
+      </div>
+      <div class="post-body" id="pv-body"></div>
+
+      <!-- SHARE BAR -->
+      <div class="share-bar">
+        <span class="share-label">Compartir</span>
+        <a id="twitter-share-btn" class="share-btn" target="_blank" rel="noopener">
+          𝕏 Twitter
+        </a>
+      </div>
+
+      <!-- COMMENTS -->
+      <div class="comments-section">
+        <h2 class="comments-title">Comentarios</h2>
+        <div class="comment-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nombre</label>
+              <input type="text" id="c-name" placeholder="Tu nombre" />
+            </div>
+            <div class="form-group">
+              <label>Email (no se publica)</label>
+              <input type="email" id="c-email" placeholder="tu@email.com" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Comentario</label>
+            <textarea id="c-text" rows="4" placeholder="Escribí tu comentario..."></textarea>
+          </div>
+          <button class="submit-btn" onclick="submitComment()">Publicar comentario</button>
+        </div>
+        <div class="comment-list" id="commentList"></div>
+      </div>
+    </article>
+  </div>
+
+  <!-- ══ NEW POST VIEW ══ -->
+  <div class="new-post-view" id="newPostView">
+    <button class="back-btn" onclick="showHome()">← Cancelar</button>
+    <h2 style="font-family:var(--serif);font-size:2rem;font-weight:300;margin-bottom:2rem;color:var(--dark);">Nueva entrada</h2>
+
+    <input class="editor-title-input" id="np-title" type="text" placeholder="Título de la entrada…" oninput="updateTwitterPreview()" />
+
+    <div class="editor-meta">
+      <input type="text" id="np-tag" placeholder="Categoría (ej: reflexión)" />
+      <input type="date" id="np-date" />
+      <input type="text" id="np-slug" placeholder="url-del-post (opcional)" />
+    </div>
+
+    <textarea class="editor-excerpt" id="np-excerpt" placeholder="Descripción breve para SEO y redes (máx. 160 caracteres)…" maxlength="160" oninput="updateTwitterPreview()"></textarea>
+
+    <textarea class="editor-body" id="np-body" placeholder="Escribí tu entrada aquí. Podés usar saltos de línea para párrafos y escribir normalmente…"></textarea>
+
+    <div class="twitter-preview" id="twitterPreview">
+      <strong>✦ Vista previa en Twitter/X (se publicará automáticamente)</strong>
+      <span id="tw-preview-text">Completá el título y la descripción para ver la vista previa.</span>
+    </div>
+
+    <div class="editor-actions">
+      <button class="publish-btn" onclick="publishPost()">Publicar entrada</button>
+      <button class="cancel-btn" onclick="showHome()">Cancelar</button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p class="footer-logo">Mi<span>Blog</span></p>
+    <p>© 2025 · Hecho con intención</p>
+  </footer>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ════════════════════════════════════════
+    //  DATOS: ENTRADAS DE EJEMPLO
+    //  Cuando publiques una entrada real, se guarda aquí automáticamente.
+    // ════════════════════════════════════════
+
+    const BLOG_NAME  = "MiBlog";
+    const TWITTER_USER = "@tu_usuario"; // ← cambiá esto una sola vez
+    const BLOG_URL  = window.location.origin;
+
+    let posts = JSON.parse(localStorage.getItem('blog_posts') || 'null') || [
+      {
+        id: 1,
+        title: "Por qué dejé de planificar tanto y empecé a vivir más",
+        excerpt: "Había una época en que tenía todo agendado: metas, metas de las metas, revisiones semanales. Y sin embargo algo faltaba.",
+        body: `<p>Había una época en que tenía todo agendado: metas, metas de las metas, revisiones semanales. Y sin embargo algo faltaba. Una sensación de que estaba <em>administrando</em> mi vida en lugar de vivirla.</p>
+
+<h2>El punto de quiebre</h2>
+
+<p>Fue un martes sin nada planeado. Me quedé en casa, sin agenda, y fue el día más presente que tuve en años. Caminé sin destino, cocinamos con lo que había, hablé con mi vecino por primera vez en meses.</p>
+
+<blockquote>No todo momento necesita ser productivo para ser valioso.</blockquote>
+
+<p>Desde entonces intento dejar espacios vacíos en mi semana. No como "tiempo libre planificado" —que suena absurdo— sino como huecos reales donde pueda aparecer cualquier cosa, o nada.</p>
+
+<p>La conclusión no es abandonar toda estructura. Es recordar que la estructura es un medio, no el fin. Que la vida está pasando mientras planeamos vivirla.</p>`,
+        tag: "Reflexión",
+        date: "12 de enero, 2025",
+        slug: "dejar-de-planificar",
+        comments: [
+          { name: "Sofía R.", date: "13 de enero, 2025", text: "Me llegó profundo. Yo también paso más tiempo planeando que disfrutando.", reply: "¡Gracias Sofía! Es algo con lo que creo que muchos luchamos sin darnos cuenta." }
+        ]
+      },
+      {
+        id: 2,
+        title: "Tres meses sin redes sociales: lo que gané y lo que perdí",
+        excerpt: "No fue una decisión radical de bienestar digital. Fue hastío puro. Y resultó ser más interesante de lo que esperaba.",
+        body: `<p>No fue una decisión radical de bienestar digital. Fue hastío puro. Un domingo cerré las apps y no las volví a abrir por noventa días.</p>
+
+<h2>Lo que gané</h2>
+
+<p>Tiempo, claramente. Pero más que eso: atención. Dejé de saber lo que estaba haciendo todo el mundo y empecé a notar lo que hacía <em>yo</em>. Leí más, dormí mejor, tuve conversaciones más largas.</p>
+
+<h2>Lo que perdí</h2>
+
+<p>Contexto social. Algunas invitaciones llegaron por Instagram y me las perdí. Perdí el hilo de conversaciones que importan y que suceden ahí.</p>
+
+<blockquote>Las redes no son buenas ni malas. Son un reflejo de cómo las usamos.</blockquote>
+
+<p>Volví, pero de otra forma. Con más intención, menos reflejo.</p>`,
+        tag: "Experiencia",
+        date: "28 de enero, 2025",
+        slug: "tres-meses-sin-redes",
+        comments: []
+      },
+      {
+        id: 3,
+        title: "El arte de no terminar los libros",
+        excerpt: "Durante años sentí culpa cada vez que abandonaba un libro. Hasta que entendí que dejar un libro también es una decisión lectora.",
+        body: `<p>Durante años sentí culpa cada vez que abandonaba un libro. Lo miraba en la mesa de noche como un deber incumplido.</p>
+
+<p>La cultura del libro terminado viene de la escuela, donde leer hasta el final era la única opción válida. Pero nadie termina una película que no le gusta porque <em>debería</em>. ¿Por qué los libros serían distintos?</p>
+
+<h2>El permiso de soltar</h2>
+
+<p>Cuando dejé de forzarme a terminar lo que no me atrapaba, empecé a disfrutar más lo que sí. La lectura dejó de ser una obligación con objetos y se volvió una conversación.</p>
+
+<blockquote>Un libro abandonado a tiempo es un libro que te dio lo que tenía para darte.</blockquote>
+
+<p>Ahora tengo ocho libros empezados y no me pesa. Algunos los terminaré. Otros me acompañarán a medias para siempre. Y está bien así.</p>`,
+        tag: "Cultura",
+        date: "9 de febrero, 2025",
+        slug: "no-terminar-libros",
+        comments: []
+      }
+    ];
+
+    let currentPostId = null;
+
+    // ════════════════════════════════════════
+    //  VISTAS
+    // ════════════════════════════════════════
+
+    function showHome() {
+      document.getElementById('homeView').classList.remove('hidden');
+      document.getElementById('postView').classList.remove('active');
+      document.getElementById('newPostView').classList.remove('active');
+      renderPosts();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showPost(id) {
+      const post = posts.find(p => p.id === id);
+      if (!post) return;
+      currentPostId = id;
+
+      document.getElementById('homeView').classList.add('hidden');
+      document.getElementById('postView').classList.add('active');
+      document.getElementById('newPostView').classList.remove('active');
+
+      document.getElementById('pv-date').textContent = post.date;
+      document.getElementById('pv-title').textContent = post.title;
+      document.getElementById('pv-tag').textContent = post.tag;
+      document.getElementById('pv-body').innerHTML = post.body;
+
+      // Twitter share link (automático)
+      const tweetText = encodeURIComponent(`${post.title} — ${post.excerpt.slice(0,80)}… ${BLOG_URL}/#${post.slug} vía ${TWITTER_USER}`);
+      document.getElementById('twitter-share-btn').href = `https://twitter.com/intent/tweet?text=${tweetText}`;
+
+      renderComments(post);
+      document.getElementById('c-name').value = '';
+      document.getElementById('c-email').value = '';
+      document.getElementById('c-text').value = '';
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showNewPost() {
+      document.getElementById('homeView').classList.add('hidden');
+      document.getElementById('postView').classList.remove('active');
+      document.getElementById('newPostView').classList.add('active');
+      document.getElementById('np-date').value = new Date().toISOString().split('T')[0];
+      updateTwitterPreview();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ════════════════════════════════════════
+    //  RENDER POSTS
+    // ════════════════════════════════════════
+
+    function renderPosts() {
+      const grid = document.getElementById('postsGrid');
+      grid.innerHTML = '';
+      [...posts].reverse().forEach((post, i) => {
+        const card = document.createElement('div');
+        card.className = 'post-card';
+        card.style.animationDelay = `${i * 0.08}s`;
+        card.onclick = () => showPost(post.id);
+        card.innerHTML = `
+          <p class="post-date">${post.date}</p>
+          <h2 class="post-title">${post.title}</h2>
+          <p class="post-excerpt">${post.excerpt}</p>
+          <span class="post-tag">${post.tag}</span>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // ════════════════════════════════════════
+    //  COMENTARIOS (con auto-respuesta)
+    // ════════════════════════════════════════
+
+    const AUTO_REPLIES = [
+      "¡Gracias por tu comentario! Me alegra que hayas pasado por acá.",
+      "¡Qué bueno leerte! Tu perspectiva me hace pensar. Pronto respondo más en detalle.",
+      "Gracias por tomarte el tiempo de comentar. ¡Me alegra que el texto resonara!",
+      "¡Muy buen punto! Es algo en lo que sigo reflexionando también.",
+      "Gracias por compartir tu experiencia. Estas conversaciones son las que más valoro."
+    ];
+
+    function renderComments(post) {
+      const list = document.getElementById('commentList');
+      list.innerHTML = '';
+      if (!post.comments || post.comments.length === 0) {
+        list.innerHTML = '<p style="color:var(--muted);font-size:0.9rem;">Sé el primero en comentar.</p>';
+        return;
+      }
+      post.comments.forEach(c => {
+        const el = document.createElement('div');
+        el.className = 'comment-item';
+        el.innerHTML = `
+          <div class="comment-meta">
+            <span class="comment-author">${c.name}</span>
+            <span class="comment-date">${c.date}</span>
+          </div>
+          <p class="comment-text">${c.text}</p>
+          ${c.reply ? `<div class="auto-reply"><strong>✦ Respuesta automática</strong>${c.reply}</div>` : ''}
+        `;
+        list.appendChild(el);
+      });
+    }
+
+    function submitComment() {
+      const name = document.getElementById('c-name').value.trim();
+      const text = document.getElementById('c-text').value.trim();
+      if (!name || !text) { showToast('Por favor completá tu nombre y comentario.'); return; }
+
+      const post = posts.find(p => p.id === currentPostId);
+      if (!post) return;
+
+      const today = new Date().toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' });
+      const reply = AUTO_REPLIES[Math.floor(Math.random() * AUTO_REPLIES.length)];
+
+      post.comments.push({ name, date: today, text, reply });
+      savePosts();
+      renderComments(post);
+
+      document.getElementById('c-name').value = '';
+      document.getElementById('c-email').value = '';
+      document.getElementById('c-text').value = '';
+      showToast('¡Comentario publicado! Se respondió automáticamente.');
+    }
+
+    // ════════════════════════════════════════
+    //  PUBLICAR ENTRADA
+    // ════════════════════════════════════════
+
+    function publishPost() {
+      const title   = document.getElementById('np-title').value.trim();
+      const tag     = document.getElementById('np-tag').value.trim() || 'General';
+      const excerpt = document.getElementById('np-excerpt').value.trim();
+      const bodyRaw = document.getElementById('np-body').value.trim();
+      const dateVal = document.getElementById('np-date').value;
+      const slug    = document.getElementById('np-slug').value.trim() || title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+
+      if (!title || !bodyRaw) { showToast('El título y el contenido son obligatorios.'); return; }
+
+      const dateFormatted = dateVal
+        ? new Date(dateVal + 'T12:00:00').toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' })
+        : new Date().toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' });
+
+      const body = bodyRaw
+        .split(/\n\n+/)
+        .map(p => p.startsWith('<') ? p : `<p>${p.replace(/\n/g,' ')}</p>`)
+        .join('\n');
+
+      const newPost = {
+        id: Date.now(),
+        title, excerpt: excerpt || bodyRaw.slice(0, 140) + '…',
+        body, tag, date: dateFormatted, slug, comments: []
+      };
+
+      posts.push(newPost);
+      savePosts();
+
+      // Simular publicación en Twitter/X
+      const tweetText = encodeURIComponent(`Nueva entrada: ${title} — ${excerpt.slice(0,80)} ${BLOG_URL}/#${slug} ${TWITTER_USER}`);
+      const twitterUrl = `https://twitter.com/intent/tweet?text=${tweetText}`;
+      window.open(twitterUrl, '_blank');
+
+      showToast('¡Entrada publicada! Se abrió Twitter para compartir.');
+      showHome();
+    }
+
+    function updateTwitterPreview() {
+      const title   = document.getElementById('np-title').value;
+      const excerpt = document.getElementById('np-excerpt').value;
+      const preview = document.getElementById('tw-preview-text');
+      if (title || excerpt) {
+        preview.textContent = `"${title}${excerpt ? ' — ' + excerpt.slice(0,60) + '…' : ''}" ${BLOG_URL}/... vía ${TWITTER_USER}`;
+      } else {
+        preview.textContent = 'Completá el título y la descripción para ver la vista previa.';
+      }
+    }
+
+    // ════════════════════════════════════════
+    //  UTILIDADES
+    // ════════════════════════════════════════
+
+    function savePosts() {
+      localStorage.setItem('blog_posts', JSON.stringify(posts));
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3500);
+    }
+
+    // ════════════════════════════════════════
+    //  INIT
+    // ════════════════════════════════════════
+
+    renderPosts();
+  </script>
+</body>
+</html>
